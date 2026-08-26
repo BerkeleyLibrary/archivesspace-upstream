@@ -94,7 +94,8 @@ module ApplicationHelper
 
     html = "<div class='"
     html += "token " if not opts[:inside_token_editor]
-    html += "#{opts[:type]} has-popover' data-toggle='popover' data-trigger='#{opts[:trigger] || "custom"}' data-html='true' data-placement='#{opts[:placement] || "auto"}' data-content=\"#{CGI.escape_html(popover_content)}\" tabindex='0'>"
+    aria_label = CGI.escape_html(strip_tags(clean_mixed_content(opts[:label].to_s)))
+    html += "#{opts[:type]} has-popover' data-toggle='popover' data-trigger='#{opts[:trigger] || "custom"}' data-html='true' data-placement='#{opts[:placement] || "auto"}' data-content=\"#{CGI.escape_html(popover_content)}\" aria-label=\"#{aria_label}\" tabindex='0'>"
 
     if opts[:icon_class]
       html += "<span class='icon-token #{opts[:icon_class]}'></span>"
