@@ -58,6 +58,8 @@
   <property name="env.APPCONFIG_SOLR_URL" value="${aspace.solr_url.dev}" />
   <property name="env.APPCONFIG_DATA_DIRECTORY" value="${aspace.data_directory.dev}" />
   <property name="env.ASPACE_TEST_DB_URL" value="${aspace.db_url.test}" />
+  <property name="env.ASPACE_TEST_DB_HOST" value="${aspace.db_host.test}" />
+  <property name="env.ASPACE_TEST_DB_PORT" value="${aspace.db_port.test}" />
   <property name="env.ASPACE_TEST_SOLR_URL" value="${aspace.solr_url.test}" />
   <property name="env.ASPACE_TEST_DATA_DIRECTORY" value="${aspace.data_directory.test}" />
   <property name="env.APPCONFIG_BACKEND_LOG" value="default" />
@@ -753,13 +755,13 @@
 
   <target name="db:dump:test" description="Create a new dump of the test database">
     <exec dir="${basedir}" executable="mysqldump"  newenvironment="false" failonerror="true" logError="true" output="../frontend/spec/fixtures/archivesspace-test.sql">
-      <arg line="--host='${aspace.db_host.test}' --port='${aspace.db_port.test}' -u root -p${aspace.db_root_password.test} ${aspace.db_name.test}"/>
+      <arg line="--host='${env.ASPACE_TEST_DB_HOST}' --port='${env.ASPACE_TEST_DB_PORT}' -u root -p${aspace.db_root_password.test} ${aspace.db_name.test}"/>
     </exec>
   </target>
 
   <target name="db:load:test" description="Create a new dump of the test database">
     <exec dir="${basedir}" executable="mysql"  newenvironment="false" failonerror="true" input="../frontend/spec/fixtures/archivesspace-test.sql">
-      <arg line="--host='${aspace.db_host.test}' --port='${aspace.db_port.test}' -u ${aspace.db_user.test} -p${aspace.db_password.test} ${aspace.db_name.test}"/>
+      <arg line="--skip-ssl-verify-server-cert --host='${env.ASPACE_TEST_DB_HOST}' --port='${env.ASPACE_TEST_DB_PORT}' -u ${aspace.db_user.test} -p${aspace.db_password.test} ${aspace.db_name.test}"/>
     </exec>
   </target>
 
