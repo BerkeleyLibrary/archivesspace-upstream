@@ -86,16 +86,18 @@ module ApplicationHelper
   end
 
   def render_token(opts)
-    link_opts = {:class => "btn btn-mini"}
+    link_opts = {}
     link_opts.merge!({:target => "_blank"}) if opts[:inside_token_editor] || opts[:inside_linker_browse]
     popover_url = url_for :controller => :resolver, :action => :resolve_readonly
     popover_url += "?uri=#{opts[:uri]}"
-    popover_content = link_to I18n.t("actions.view"), popover_url, link_opts
 
-    html = "<div class='"
-    html += "token " if not opts[:inside_token_editor]
     aria_label = CGI.escape_html(strip_tags(clean_mixed_content(opts[:label].to_s)))
-    html += "#{opts[:type]} has-popover' data-toggle='popover' data-trigger='#{opts[:trigger] || "custom"}' data-html='true' data-placement='#{opts[:placement] || "auto"}' data-content=\"#{CGI.escape_html(popover_content)}\" aria-label=\"#{aria_label}\" tabindex='0'>"
+    link_opts[:class] = "token " unless opts[:inside_token_editor]
+    link_opts[:class] = "#{link_opts[:class]}#{opts[:type]}"
+    link_opts[:"aria-label"] = aria_label
+    link_opts[:tabindex] = 0
+
+    html = ""
 
     if opts[:icon_class]
       html += "<span class='icon-token #{opts[:icon_class]}'></span>"
@@ -103,8 +105,7 @@ module ApplicationHelper
       html += "<span class='icon-token'></span>"
     end
     html += clean_mixed_content(opts[:label])
-    html += "</div>"
-    html.html_safe
+    link_to html.html_safe, popover_url, link_opts
   end
 
   def link_to_help(opts = {})

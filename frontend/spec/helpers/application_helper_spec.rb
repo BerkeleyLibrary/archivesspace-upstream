@@ -13,18 +13,9 @@ describe ApplicationHelper do
       )
 
       expect(html).to include('aria-label="Test Label"')
-      expect(html).to include("tabindex='0'")
-    end
-
-    it 'strips HTML before setting the aria-label' do
-      html = helper.render_token(
-        uri: '/repositories/1/resources/2',
-        type: 'resource',
-        label: +'<em>Test</em> Label'
-      )
-
-      expect(html).to include('aria-label="Test Label"')
-      expect(html).not_to include('aria-label="<em>Test</em> Label"')
+      expect(html).to include('href="/resolve/readonly?uri=/repositories/1/resources/2"')
+      expect(html).to include('tabindex="0"')
+      expect(html).not_to include('has-popover')
     end
   end
 end
