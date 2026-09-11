@@ -88,24 +88,19 @@ module ApplicationHelper
   def render_token(opts)
     link_opts = {}
     link_opts.merge!({:target => "_blank"}) if opts[:inside_token_editor] || opts[:inside_linker_browse]
-    popover_url = url_for :controller => :resolver, :action => :resolve_readonly
-    popover_url += "?uri=#{opts[:uri]}"
+    url = url_for :controller => :resolver, :action => :resolve_readonly
+    url += "?uri=#{opts[:uri]}"
 
-    aria_label = CGI.escape_html(strip_tags(clean_mixed_content(opts[:label].to_s)))
     link_opts[:class] = "token " unless opts[:inside_token_editor]
     link_opts[:class] = "#{link_opts[:class]}#{opts[:type]}"
-    link_opts[:"aria-label"] = aria_label
-    link_opts[:tabindex] = 0
-
-    html = ""
 
     if opts[:icon_class]
-      html += "<span class='icon-token #{opts[:icon_class]}'></span>"
+      html = "<span class='icon-token #{opts[:icon_class]}'></span>"
     else
-      html += "<span class='icon-token'></span>"
+      html = "<span class='icon-token'></span>"
     end
     html += clean_mixed_content(opts[:label])
-    link_to html.html_safe, popover_url, link_opts
+    link_to html.html_safe, url, link_opts
   end
 
   def link_to_help(opts = {})
