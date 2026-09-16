@@ -23,6 +23,29 @@ describe 'Collection Management', js: true do
     expect(page).to have_text 'No records found'
   end
 
+  it 'provides a keyboard-operable accordion control on the accession show page' do
+    accession = create(
+      :accession,
+      collection_management: {
+        "processing_priority" => "high"
+      }
+    )
+
+    begin
+      visit "/accessions/#{accession.id}"
+
+      within '#accession_collection_management_' do
+        toggle = find('.accordion-toggle')
+        expect(toggle.tag_name).to eq('a')
+        expect(toggle[:href]).to end_with('#accession_collection_management__collection_management')
+        expect(toggle[:'aria-controls']).to eq('accession_collection_management__collection_management')
+      end
+    ensure
+      accession.delete
+      run_index_round
+    end
+  end
+
   it 'is browseable even when its linked accession has no title' do
     now = Time.now.to_i
 
