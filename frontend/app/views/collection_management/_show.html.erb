@@ -7,7 +7,7 @@
   <div class="details my-3" id="<%= section_id %>_accordion">
     <div class="card">
       <div class="card-header panel-heading">
-        <a class="row collapsed accordion-toggle" data-toggle="collapse" data-parent="#<%= section_id %>_accordion" href="#<%= section_id %>_collection_management" aria-expanded="false" aria-controls="<%= section_id %>_collection_management">
+        <button type="button" class="row collapsed accordion-toggle" data-toggle="collapse" data-parent="#<%= section_id %>_accordion" data-target="#<%= section_id %>_collection_management" aria-expanded="false" aria-controls="<%= section_id %>_collection_management">
           <div class="col-md-1">
             <span class="glyphicon"></span>
           </div>
@@ -15,7 +15,7 @@
             <%= t("collection_management.processing_priority") %>:
             <strong><%= t("enumerations.collection_management_processing_priority.#{collection_management['processing_priority'] || 'none'}", :default => collection_management['processing_priority']) %></strong>
           </div>
-        </a>
+        </button>
       </div>
       <div id="<%= section_id %>_collection_management" class="collapse">
         <%= read_only_view(collection_management) %>

@@ -36,8 +36,9 @@ describe 'Collection Management', js: true do
 
       within '#accession_collection_management_' do
         toggle = find('.accordion-toggle')
-        expect(toggle.tag_name).to eq('a')
-        expect(toggle[:href]).to end_with('#accession_collection_management__collection_management')
+        expect(toggle.tag_name).to eq('button')
+        expect(toggle[:type]).to eq('button')
+        expect(toggle[:'data-target']).to eq('#accession_collection_management__collection_management')
         expect(toggle[:'aria-controls']).to eq('accession_collection_management__collection_management')
       end
     ensure
