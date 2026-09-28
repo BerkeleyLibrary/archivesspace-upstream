@@ -83,6 +83,9 @@ describe 'Merge and Transfer', js: true do
     find('#merge-dropdown button').click
 
     expect(page).to have_selector('#form_merge', visible: true)
+    within '#form_merge' do
+      expect(find('.missing-ref-message', visible: false)[:role]).to eq 'alert'
+    end
 
     within '#form_merge' do
       fill_in 'token-input-merge_ref_', with: resource_source.title
@@ -121,6 +124,8 @@ describe 'Merge and Transfer', js: true do
     merge_button.click
 
     expect(find('#merge-dropdown .merge-action')[:'aria-expanded']).to eq 'true'
+    expect(page).to have_selector('#form_merge', visible: true)
+    expect(find('.missing-ref-message', visible: false)[:role]).to eq 'alert'
   end
 
   it 'can transfer an archival object to another resource' do
