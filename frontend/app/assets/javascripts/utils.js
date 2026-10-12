@@ -116,7 +116,7 @@ $(function () {
   };
 
   var clearSelected = function () {
-    $('#archivesSpaceSidebar .as-nav-list > li:not(.sidebar-heading)').each(
+    $('#archivesSpaceSidebar .as-nav-list > li:not(.sidebar-heading) > a[role="tab"]').each(
       function () {
         $(this).attr('aria-selected', 'false');
       }
@@ -125,9 +125,9 @@ $(function () {
 
   var initSidebar = function () {
     $('#archivesSpaceSidebar:not(.initialised)').each(function () {
-      $('a', $(this)).click(function (e) {
+      $('a[role="tab"]', $(this)).click(function (e) {
         clearSelected();
-        $(this).parent().attr('aria-selected', 'true');
+        $(this).attr('aria-selected', 'true');
       });
 
       $(this).addClass('initialised');

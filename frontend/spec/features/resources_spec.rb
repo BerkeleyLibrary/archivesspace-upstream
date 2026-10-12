@@ -34,14 +34,14 @@ describe 'Resources', js: true do
         tablist = find "ul.as-nav-list"
 
         expect(tablist).to have_xpath "self::ul[@role='tablist']"
-        expect(tablist).not_to have_xpath "li[@role='tab'][@aria-selected='true']"
+        expect(tablist).not_to have_xpath "li/a[@role='tab'][@aria-selected='true']"
 
         find("li.sidebar-entry-resource_extents_ a").click
-        expect(tablist).to have_xpath("li[@role='tab'][@aria-selected='true']/a[@href='#resource_extents_']")
+        expect(tablist).to have_xpath("li/a[@role='tab'][@aria-selected='true'][@href='#resource_extents_']")
 
         find("li.sidebar-entry-resource_dates_ a").click
-        expect(tablist).to have_xpath("li[@role='tab'][@aria-selected='true']/a[@href='#resource_dates_']")
-        expect(tablist).to have_no_xpath("li[@role='tab'][@aria-selected='true']/a[@href='#resource_extents_']")
+        expect(tablist).to have_xpath("li/a[@role='tab'][@aria-selected='true'][@href='#resource_dates_']")
+        expect(tablist).to have_no_xpath("li/a[@role='tab'][@aria-selected='true'][@href='#resource_extents_']")
       end
     end
 

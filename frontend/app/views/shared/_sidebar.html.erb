@@ -14,8 +14,8 @@
     <% end %>
 
     <% unless defined?(suppress_basic_information) && suppress_basic_information %>
-      <li role="tab" aria-selected="false">
-        <a class="nav-link" href="#basic_information">
+      <li>
+        <a class="nav-link" href="#basic_information" role="tab" aria-selected="false">
           <%= t("#{record_type}._frontend.section.basic_information") %>
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
