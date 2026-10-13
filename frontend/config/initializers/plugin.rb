@@ -186,7 +186,7 @@ module Plugins
 
     def render_sidebar(view_context, record, mode)
       "<li>" +
-        "  <a href='##{build_section_id(record['jsonmodel_type'])}'>" +
+        "  <a href='##{build_section_id(record['jsonmodel_type'])}' role='tab' aria-selected='false'>" +
         "    #{@sidebar_label}" +
         "    <span class='glyphicon glyphicon-chevron-right'></span>" +
         "  </a>" +
