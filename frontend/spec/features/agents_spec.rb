@@ -353,6 +353,31 @@ describe 'Agents', js: true do
         end
       end
 
+      it 'sorts embedded linked records without navigating to a JavaScript response' do
+        agent = create(:agent_person, title: 'Agent for sorting')
+        visit "agents/agent_person/#{agent.id}"
+
+        within '#linked_agents' do
+          form_html = <<~HTML
+            <form action="/search" method="get">
+              <input type="hidden" name="format" value="js">
+              <input type="hidden" name="listing_only" value="true">
+              <input type="hidden" name="filter_term[]" value='{"agent_uris":"/agents/people/does-not-exist"}'>
+              <input type="hidden" name="sort" value="title_sort asc">
+              <button type="submit">Title</button>
+            </form>
+          HTML
+          execute_script(
+            "document.querySelector('#linked_agents .embedded-search').innerHTML = arguments[0]",
+            form_html
+          )
+          click_button 'Title'
+          expect(page).to have_text 'No records found'
+        end
+
+        expect(page).to have_current_path("/agents/agent_person/#{agent.id}")
+      end
+
       it 'can add a date of existence to an Agent' do
         now = Time.now.to_i
 
